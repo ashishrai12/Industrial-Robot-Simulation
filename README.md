@@ -1,5 +1,8 @@
 # Industrial Robot Simulation
 
+<img width="803" height="747" alt="image" src="https://github.com/user-attachments/assets/aef543d3-34f8-401c-a070-7080b3098f20" />
+
+
 A Python-based simulation of an industrial robot arm performing pick-and-place tasks on a conveyor belt. This project demonstrates basic robotics concepts, state machine logic, and real-time visualization using `matplotlib`.
 
 ## Features
