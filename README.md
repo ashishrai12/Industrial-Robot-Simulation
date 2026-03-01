@@ -1,58 +1,69 @@
 # Industrial Robot Simulation
 
-<img width="803" height="747" alt="image" src="https://github.com/user-attachments/assets/aef543d3-34f8-401c-a070-7080b3098f20" />
+![Industrial Robot](https://img.shields.io/badge/Simulation-Robotics-blue)
+![Python 3.7+](https://img.shields.io/badge/Python-3.7+-green)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow)
 
+A modular, kinematics-based simulation of an industrial robot arm performing pick-and-place operations on a conveyor belt.
 
-A Python-based simulation of an industrial robot arm performing pick-and-place tasks on a conveyor belt. This project demonstrates basic robotics concepts, state machine logic, and real-time visualization using `matplotlib`.
+## Overview
+
+This project simulates a 2-degree-of-freedom (2-DOF) planar robot arm in a manufacturing environment. It includes a mathematical implementation of forward and inverse kinematics, a stochastic environment with conveyor-driven objects, and a visualization engine using Matplotlib.
+
+## Mathematical Foundation
+
+The robot uses a 2-link planar kinematics model.
+
+### Forward Kinematics
+Given joint angles $\theta_1$ and $\theta_2$, the end-effector position $(x, y)$ is:
+$$x = L_1 \cos(\theta_1) + L_2 \cos(\theta_1 + \theta_2)$$
+$$y = L_1 \sin(\theta_1) + L_2 \sin(\theta_1 + \theta_2)$$
+
+### Inverse Kinematics
+To reach a target $(x, y)$, the joint angles are calculated using the Law of Cosines:
+$$\cos(\theta_2) = \frac{x^2 + y^2 - L_1^2 - L_2^2}{2 L_1 L_2}$$
+$$\theta_1 = \text{atan2}(y, x) - \text{atan2}(L_2 \sin(\theta_2), L_1 + L_2 \cos(\theta_2))$$
 
 ## Features
 
-*   **Robot Simulation**:
-    *   Simulates a robot arm with movement and grasping capabilities.
-    *   Implements a state machine (IDLE, MOVING, PICKING, PLACING, ERROR).
-    *   Handles edge cases like mechanical failures and grasp misses.
-*   **Dynamic Environment**:
-    *   Conveyor belt system with moving objects.
-    *   Randomized object generation with positional noise (misplacement).
-*   **Real-Time Visualization**:
-    *   Live animation of the robot and environment.
-    *   Visual feedback for robot state (Blue = Normal, Red = Error).
-    *   On-screen dashboard showing success rates and failure counts.
+- **2-Link Kinematics**: Fully implemented analytical IK solver.
+- **Stochastic Environment**: Random mechanical failures and grasp misses.
+- **Real-time Visualization**: Interactive Matplotlib-based display.
+- **Modular Design**: Separated concerns into `src/robot_simulation/`.
+- **Unit Testing**: Automated tests for mathematical correctness.
 
-## Requirements
+## Getting Started
 
-*   Python 3.x
-*   `numpy`
-*   `matplotlib`
+### Prerequisites
 
-## Installation
+- Python 3.7+
+- NumPy
+- Matplotlib
 
-1.  Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/industrial-robot-sim.git
-    cd industrial-robot-sim
-    ```
+### Installation
 
-2.  Install dependencies:
-    ```bash
-    pip install numpy matplotlib
-    ```
+```bash
+git clone https://github.com/ashishrai12/Industrial-Robot-Simulation.git
+cd Industrial-Robot-Simulation
+pip install -r requirements.txt
+```
 
-## Usage
-
-Run the simulation script:
+### Running the Simulation
 
 ```bash
 python robot_simulation.py
 ```
 
-A window will open displaying the simulation. The robot will attempt to pick up objects from the conveyor belt and place them in the drop zone.
+### Running Tests
 
-*   **Close the window** to stop the simulation.
+```bash
+python -m unittest discover tests
+```
 
-## Simulation Details
+## Contributing
 
-*   **Success Rate**: Tracks the percentage of successful pick-and-place operations.
-*   **Failures**:
-    *   **Grasp Failure**: 10% chance to miss an object during pickup.
-    *   **Mechanical Failure**: 0.5% chance per frame for the arm to malfunction (requires auto-reset).
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the `LICENSE` file for details.
