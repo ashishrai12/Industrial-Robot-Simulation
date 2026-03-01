@@ -24,6 +24,19 @@ To reach a target $(x, y)$, the joint angles are calculated using the Law of Cos
 $$\cos(\theta_2) = \frac{x^2 + y^2 - L_1^2 - L_2^2}{2 L_1 L_2}$$
 $$\theta_1 = \text{atan2}(y, x) - \text{atan2}(L_2 \sin(\theta_2), L_1 + L_2 \cos(\theta_2))$$
 
+## Simulation & Inference
+
+The simulation operates on a discrete-time loop where the robot acts as an intelligent agent with the following inference pipeline:
+
+1.  **Perception**: The agent scans the "Pickup Zone" (a specific $x$-range on the conveyor) to identify the item closest to the exit.
+2.  **Path Inference**: Using the target's current $(x, y)$ coordinates, the robot calculates the required joint configurations $(\theta_1, \theta_2)$ using the Inverse Kinematics solver.
+3.  **Motion Planning**: The robot moves its joints at a fixed angular velocity toward the calculated target configuration.
+4.  **Stochastic Execution**: 
+    *   **Grasp Inference**: Upon reaching the object, a probabilistic check (10% failure rate) determines if the grasp was successful.
+    *   **System Reliability**: A 0.5% failure chance per frame simulates mechanical wear, requiring a system "recovery" state.
+
+This loop ensures that the simulation is not just a playback of an animation, but a responsive system that adapts to the moving objects on the conveyor belt.
+
 ## Features
 
 - **2-Link Kinematics**: Fully implemented analytical IK solver.
