@@ -26,6 +26,7 @@ graph TD
     
     ext --> jl[julia_kinematics/]
     ext --> rs_ext[rust_kinematics/]
+    ext --> js[js_kinematics/]
 ```
 
 ## Mathematical Foundation
@@ -94,6 +95,7 @@ To promote code diversity and performance benchmarking, this project includes al
 
 - **Julia** (`extensions/julia_kinematics/`): Leverages Julia's mathematical efficiency for numerical computing.
 - **Rust** (`extensions/rust_kinematics/`): A memory-safe, high-performance implementation focused on systems-level robotics.
+- **JavaScript** (`extensions/js_kinematics/`): Ideal for migrating the simulation to a lightweight, web-based environment.
 
 ## Getting Started
 
