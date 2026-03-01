@@ -31,6 +31,14 @@ $$\theta_1 = \text{atan2}(y, x) - \text{atan2}(L_2 \sin(\theta_2), L_1 + L_2 \co
 - **Real-time Visualization**: Interactive Matplotlib-based display.
 - **Modular Design**: Separated concerns into `src/robot_simulation/`.
 - **Unit Testing**: Automated tests for mathematical correctness.
+- **Multi-Language Support**: High-performance extensions in Julia and Rust.
+
+## Multi-Language Extensions
+
+To promote code diversity and performance benchmarking, this project includes alternative implementations of the core kinematics engine:
+
+- **Julia** (`extensions/julia_kinematics/`): Leverages Julia's mathematical efficiency for numerical computing.
+- **Rust** (`extensions/rust_kinematics/`): A memory-safe, high-performance implementation focused on systems-level robotics.
 
 ## Getting Started
 
