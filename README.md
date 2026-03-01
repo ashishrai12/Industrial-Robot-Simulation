@@ -10,6 +10,24 @@ A modular, kinematics-based simulation of an industrial robot arm performing pic
 
 This project simulates a 2-degree-of-freedom (2-DOF) planar robot arm in a manufacturing environment. It includes a mathematical implementation of forward and inverse kinematics, a stochastic environment with conveyor-driven objects, and a visualization engine using Matplotlib.
 
+### Project Structure
+
+```mermaid
+graph TD
+    Root[Industrial-Robot-Simulation] --> src[src/]
+    Root --> tests[tests/]
+    Root --> ext[extensions/]
+    Root --> main[robot_simulation.py]
+    
+    src --> rs[robot_simulation/]
+    rs --> kin[kinematics.py]
+    rs --> mod[models.py]
+    rs --> sim[simulation.py]
+    
+    ext --> jl[julia_kinematics/]
+    ext --> rs_ext[rust_kinematics/]
+```
+
 ## Mathematical Foundation
 
 The robot uses a 2-link planar kinematics model.
@@ -36,6 +54,30 @@ The simulation operates on a discrete-time loop where the robot acts as an intel
     *   **System Reliability**: A 0.5% failure chance per frame simulates mechanical wear, requiring a system "recovery" state.
 
 This loop ensures that the simulation is not just a playback of an animation, but a responsive system that adapts to the moving objects on the conveyor belt.
+
+### Inference Flow
+
+```mermaid
+stateDiagram-v2
+    [*] --> IDLE
+    IDLE --> MOVING_TO_PICK: Perception (Identify Target)
+    MOVING_TO_PICK --> PICKING: Track & Approach
+    PICKING --> MOVING_TO_PLACE: Grasp Success
+    PICKING --> IDLE: Grasp Failure (10%)
+    MOVING_TO_PLACE --> PLACING: Approach Drop Zone
+    PLACING --> RETURNING: Drop Object
+    RETURNING --> IDLE: Return to Base
+    
+    state "Mechanical Wear" as Wear
+    IDLE --> Wear
+    MOVING_TO_PICK --> Wear
+    PICKING --> Wear
+    MOVING_TO_PLACE --> Wear
+    PLACING --> Wear
+    RETURNING --> Wear
+    Wear --> ERROR: Malfunction (0.5%)
+    ERROR --> IDLE: Recovery (2%)
+```
 
 ## Features
 
